@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Notice Board</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      text-align: center;
+      margin: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .notice {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px auto;
+      width: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <h1>📢 Digital Notice Board</h1>
+  <div id="notices"></div>
+
+  <script>
+    async function loadNotices() {
+      const res = await fetch('/api/notices');
+      const data = await res.json();
+      const container = document.getElementById('notices');
+      container.innerHTML = '';
+      data.forEach(n => {
+        const div = document.createElement('div');
+        div.className = 'notice';
+        div.textContent = n.message;
+        container.appendChild(div);
+      });
+    }
+    loadNotices();
+  </script>
+</body>
+</html>
