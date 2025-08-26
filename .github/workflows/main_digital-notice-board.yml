@@ -24,19 +24,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Build the project (if you have a frontend build step)
+      # Build project (if you have a frontend)
       - name: Build project
         run: npm run build --if-present
-
-      # Zip the app (needed for deployment)
-      - name: Archive app
-        run: zip -r release.zip ./*
 
       # Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: digital-notice-board   # 👈 replace with your Azure Web App name
+          app-name: digital-notice-board   # 👈 Replace with your Azure Web App name
           slot-name: production
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: release.zip
+          package: .
